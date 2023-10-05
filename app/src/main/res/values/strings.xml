@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Sujal\'s Android Labs</string>
+    <string name="hello_message">Hello World!</string>
+    <string name="button_message">I\'m a button</string>
+    <string name="spin_message">Spin Flag</string>
+    <string name="button1">button1</string>
+    <string name="button2">button2</string>
+    <string name="button3">button3</string>
 </resources>

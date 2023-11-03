@@ -1,4 +1,4 @@
-package algonquin.cst2335.kala0049.UI;
+package algonquin.cst2335.kala0049;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,13 +10,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import algonquin.cst2335.kala0049.R;
-
 
 /**
  * The MainActivity class represents the main activity of the application.
  * It allows users to input a password and checks its complexity.
- * @author Gurarman Singh
+ * @author Sujal Kalathiya
  * @version 1.0
  */
 public class MainActivity extends AppCompatActivity {

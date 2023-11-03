@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Sujal\'s Android Labs</string>
+    <string name="password_message">Type your password</string>
+    <string name="button_message">Login</string>
+    <string name="message">Message goes here</string>
+    <string name="time">Time goes here</string>
 </resources>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Gurarman\'s Android Labs</string>
+    <string name="app_name">Sujal\'s Android Labs</string>
     <string name="password_message">Tapez votre mot de passe</string>
     <string name="button_message">connexion</string>
+    <string name="message">Message goes here</string>
+    <string name="time">Time goes here</string>
 </resources>

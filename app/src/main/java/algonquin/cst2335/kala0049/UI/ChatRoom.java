@@ -5,7 +5,6 @@ import static algonquin.cst2335.kala0049.UI.ChatRoom.mDAO;
 import static algonquin.cst2335.kala0049.UI.ChatRoom.messages;
 import static algonquin.cst2335.kala0049.UI.ChatRoom.myAdapter;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +39,6 @@ import algonquin.cst2335.kala0049.Data.ChatRoomViewModel;
 import algonquin.cst2335.kala0049.Data.MessageDatabase;
 import algonquin.cst2335.kala0049.Data.MessageDetailsFragment;
 import algonquin.cst2335.kala0049.R;
-import algonquin.cst2335.kala0049.R.id;
 import algonquin.cst2335.kala0049.databinding.ActivityChatRoomBinding;
 import algonquin.cst2335.kala0049.databinding.ReceiveMessageBinding;
 import algonquin.cst2335.kala0049.databinding.SentMessageBinding;
@@ -63,7 +61,7 @@ public class ChatRoom extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch( item.getItemId() ) {
+        switch(item.getItemId()) {
             case R.id.item_1:
                 ChatMessage selectedMessage = chatModel.selectedMessage.getValue();
                 if (selectedMessage != null) {
@@ -100,8 +98,8 @@ public class ChatRoom extends AppCompatActivity {
                 }
                 break;
 
-                case R.id.item_2:
-                Toast.makeText(this, "Version 1.0, created Sujal Kalathiya", Toast.LENGTH_SHORT).show();
+            case R.id.item_2:
+                Toast.makeText(this, "Version 1.0, created by Gurarman Singh", Toast.LENGTH_SHORT).show();
                 break;
         }
 

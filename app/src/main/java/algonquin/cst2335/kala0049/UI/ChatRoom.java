@@ -61,7 +61,7 @@ public class ChatRoom extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()) {
+        switch( item.getItemId() ) {
             case R.id.item_1:
                 ChatMessage selectedMessage = chatModel.selectedMessage.getValue();
                 if (selectedMessage != null) {
@@ -99,7 +99,7 @@ public class ChatRoom extends AppCompatActivity {
                 break;
 
             case R.id.item_2:
-                Toast.makeText(this, "Version 1.0, created by Gurarman Singh", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Version 1.0, created by Sujal Kalathiya", Toast.LENGTH_SHORT).show();
                 break;
         }
 

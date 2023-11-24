@@ -6,10 +6,10 @@
         android:id="@+id/item_1"
         android:icon="@drawable/garbage"
         android:title="Delete this item"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/item_2"
         android:icon="@drawable/about"
         android:title="About"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

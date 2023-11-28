@@ -14,7 +14,7 @@ import android.widget.Toast;
 /**
  * The MainActivity class represents the main activity of the application.
  * It allows users to input a password and checks its complexity.
- * @author Gurarman Singh
+ * @author Sujal Kalathiya
  * @version 1.0
  */
 public class MainActivity extends AppCompatActivity {

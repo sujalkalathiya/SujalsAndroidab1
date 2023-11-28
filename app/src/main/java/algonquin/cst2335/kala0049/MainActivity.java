@@ -3,116 +3,125 @@ package algonquin.cst2335.kala0049;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ImageView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
-/**
- * The MainActivity class represents the main activity of the application.
- * It allows users to input a password and checks its complexity.
- * @author Gurarman Singh
- * @version 1.0
- */
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import algonquin.cst2335.kala0049.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
-    /** The TextView used to display messages.*/
-    private TextView tv = null;
-    /** The EditText used to input the password.*/
-    private EditText etp = null;
-    /** The Button used to perform the login action.*/
-    private Button butn = null;
+    protected String cityName;
+    protected String stringURL;
+    protected String imageUrl;
+    protected RequestQueue queue;
+    protected String iconName;
+    Bitmap image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        tv = findViewById(R.id.textView);
-        etp = findViewById(R.id.editTextTextPassword);
-        butn = findViewById(R.id.login_button);
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        butn.setOnClickListener( (View v) ->{
-            String password = etp.getText().toString();
-            if (!checkPasswordComplexity(password)){
-                tv.setText("You shall not pass!");
+        queue = Volley.newRequestQueue(this);
+
+        binding.forecastButton.setOnClickListener(click -> {
+            cityName = binding.editTextCity.getText().toString();
+
+            try {
+                stringURL = "https://api.openweathermap.org/data/2.5/weather?q="
+                        + URLEncoder.encode(cityName, "UTF-8")
+                        + "&appid=f9e5419d0a68c12c70ce28d80f35df9c&units=metric";
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
             }
-            else{
-                tv.setText("Your password meets the requirements");
-            }
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, stringURL, null,
+                    (response) -> {
+                        try {
+                            JSONObject weather = response.getJSONArray("weather").getJSONObject(0);
+                            iconName = weather.getString("icon");
+                            String description = weather.getString("description");
+
+                            JSONObject main = response.getJSONObject("main");
+                            double currentTemp = main.getDouble("temp");
+                            double minTemp = main.getDouble("temp_min");
+                            double maxTemp = main.getDouble("temp_max");
+                            int humidity = main.getInt("humidity");
+
+                            // Set text and visibility for all TextViews
+                            runOnUiThread( (  )  -> {
+                                binding.temp.setText("The Current Temperature is: " + currentTemp);
+                                binding.temp.setVisibility(View.VISIBLE);
+
+                                binding.minTemp.setText("The Max Temperature is: " + minTemp);
+                                binding.minTemp.setVisibility(View.VISIBLE);
+
+                                binding.maxTemp.setText("The Min Temperature is: " + maxTemp);
+                                binding.maxTemp.setVisibility(View.VISIBLE);
+
+                                binding.humidity.setText("The Humidity is:: " + humidity);
+                                binding.humidity.setVisibility(View.VISIBLE);
+
+                                binding.description.setText(description);
+                                binding.description.setVisibility(View.VISIBLE);
+                            });
+
+                            String pathname = getFilesDir() + "/" + iconName + ".png";
+                            File file = new File(pathname);
+
+                            if(file.exists()) {
+                                image = BitmapFactory.decodeFile(pathname);
+                                runOnUiThread(() -> {
+                                    binding.icon.setImageBitmap(image);
+                                    binding.icon.setVisibility(View.VISIBLE);
+                                });
+                            } else {
+                                ImageRequest imgReq = new ImageRequest("http://openweathermap.org/img/w/" + iconName + ".png",
+                                        bitmap -> {
+                                            try {
+                                                image = bitmap;
+                                                image.compress(Bitmap.CompressFormat.PNG, 100, openFileOutput(iconName + ".png", Activity.MODE_PRIVATE));
+                                                runOnUiThread(() -> {
+                                                    binding.icon.setImageBitmap(image);
+                                                    binding.icon.setVisibility(View.VISIBLE);
+                                                });
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }, 1024, 1024, ImageView.ScaleType.CENTER, Bitmap.Config.RGB_565,
+                                        error -> Log.e("ImageRequestError", error.toString()));
+                                queue.add(imgReq);
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }, error -> Log.e("JsonObjectRequestError", error.toString()));
+
+            queue.add(request);
         });
     }
-
-    /**
-     * This function checks if the password entered by the user has an Upper Case letter,
-     * a lower case letter, a number, and a special symbol. It shows a Toast message if otherwise
-     *
-     * @param passcheck string containing user password
-     * @return True if all check passes and the password is complex enough and false if it fails.
-     */
-    boolean checkPasswordComplexity(String passcheck) {
-        boolean foundUpperCase = false;
-        boolean foundLowerCase = false;
-        boolean foundNumber = false;
-        boolean foundSpecial = false;
-
-        for (int i = 0; i < passcheck.length(); i++) {
-            char c = passcheck.charAt(i);
-
-            if (Character.isUpperCase(c)) {
-                foundUpperCase = true;
-            } else if (Character.isLowerCase(c)) {
-                foundLowerCase = true;
-            } else if (Character.isDigit(c)) {
-                foundNumber = true;
-            } else if (isSpecialCharacter(c)) {
-                foundSpecial = true;
-            }
-        }
-
-        if (foundUpperCase && foundLowerCase && foundNumber && foundSpecial) {
-            return true;
-        } else {
-            if (!foundUpperCase) {
-                Toast.makeText(MainActivity.this, "The password is missing an uppercase letter", Toast.LENGTH_SHORT).show();
-            }
-            if (!foundLowerCase) {
-                Toast.makeText(MainActivity.this, "The password is missing a lowercase letter", Toast.LENGTH_SHORT).show();
-            }
-            if (!foundNumber) {
-                Toast.makeText(MainActivity.this, "The password is missing a number", Toast.LENGTH_SHORT).show();
-            }
-            if (!foundSpecial) {
-                Toast.makeText(MainActivity.this, "The password is missing a symbol", Toast.LENGTH_SHORT).show();
-            }
-            return false;
-        }
-    }
-
-    /**
-     * Checks if the given character is a special character.
-     *
-     * @param c The character to check.
-     * @return true if the character is a special character, false otherwise.
-     */
-    boolean isSpecialCharacter(char c) {
-        switch (c) {
-            case '#':
-            case '?':
-            case '*':
-            case '!':
-            case '@':
-            case '$':
-            case '&':
-            case '%':
-            case '^':
-                return true;
-            default:
-                return false;
-        }
-    }
-
 }

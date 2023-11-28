@@ -1,44 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/password_message"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:text="@string/button_message"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Type in the name of the city" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="wrap_content"
+        android:id="@+id/editTextCity"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:hint="Type city name here"
+        android:inputType="text" />
 
+    <Button
+        android:id="@+id/forecastButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="Get Forecast" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/temp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Temp goes here"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/maxTemp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="maxTemp goes here"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/minTemp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="minTemp goes here"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/humidity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="humidity goes here"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="description goes here"
+        android:visibility="invisible" />
+
+</LinearLayout>
